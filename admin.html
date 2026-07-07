@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalLink Express Admin</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f7fb;
+}
+
+header{
+background:#003366;
+color:#fff;
+padding:20px;
+text-align:center;
+}
+
+.container{
+max-width:1200px;
+margin:30px auto;
+padding:20px;
+}
+
+.card{
+background:#fff;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,.1);
+margin-bottom:25px;
+}
+
+h2{
+margin-bottom:20px;
+color:#003366;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+input,
+select,
+textarea{
+width:100%;
+padding:12px;
+border:1px solid #ccc;
+border-radius:6px;
+margin-top:5px;
+margin-bottom:15px;
+}
+
+button{
+background:#003366;
+color:#fff;
+border:none;
+padding:12px 20px;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#004d99;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,
+td{
+border:1px solid #ddd;
+padding:10px;
+text-align:left;
+}
+
+th{
+background:#003366;
+color:white;
+}
+
+.status{
+font-weight:bold;
+}
+
+@media(max-width:768px){
+.grid{
+grid-template-columns:1fr;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>GlobalLink Express Admin Dashboard</h1>
+<p>Create and manage shipments</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Create Shipment</h2>
+
+<form id="shipmentForm">
+
+<div class="grid">
+
+<div>
+<label>Sender Name</label>
+<input id="sender" required>
+</div>
+
+<div>
+<label>Receiver Name</label>
+<input id="receiver" required>
+</div>
+
+<div>
+<label>Origin</label>
+<input id="origin" required>
+</div>
+
+<div>
+<label>Destination</label>
+<input id="destination" required>
+</div>
+
+<div>
+<label>Status</label>
+
+<select id="status">
+
+<option>Shipment Created</option>
+<option>Collected</option>
+<option>In Transit</option>
+<option>Customs Clearance</option>
+<option>Out For Delivery</option>
+<option>Delivered</option>
+
+</select>
+
+</div>
+
+<div>
+<label>Expected Delivery</label>
+<input type="date" id="delivery">
+</div>
+
+</div>
+
+<button type="submit">
+Create Shipment
+</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Shipment List</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Tracking</th>
+<th>Sender</th>
+<th>Receiver</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="shipmentTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+function trackingNumber(){
+
+return "GLX"+
+Math.floor(Math.random()*900000000+100000000);
+
+}
+
+const form=document.getElementById("shipmentForm");
+
+const table=document.getElementById("shipmentTable");
+
+form.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const tracking=trackingNumber();
+
+const sender=document.getElementById("sender").value;
+
+const receiver=document.getElementById("receiver").value;
+
+const status=document.getElementById("status").value;
+
+table.innerHTML+=`
+<tr>
+<td>${tracking}</td>
+<td>${sender}</td>
+<td>${receiver}</td>
+<td class="status">${status}</td>
+</tr>
+`;
+
+alert("Shipment created.\nTracking Number: "+tracking);
+
+form.reset();
+
+});
+
+</script>
+
+</body>
+</html>
